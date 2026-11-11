@@ -16,6 +16,8 @@ require("conform").setup({
 		nix = { "alejandra" },
 		css = { "prettier" },
 		rust = { "rustfmt" },
+		cpp = { "clang-format" },
+		c = { "clang-format" },
 	},
 	format_on_save = true,
 	undojoin = true,
