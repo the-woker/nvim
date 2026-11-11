@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
+vim.o.confirm = true
 
 -- Scrolloff
 local scrolloff = math.floor(vim.o.lines / 2) - 3
@@ -18,6 +19,9 @@ vim.wo.relativenumber = true
 vim.wo.number = true
 vim.api.nvim_set_hl(0, "LineNr", { fg = "#6c7086" }) -- overlay0
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#cba6f7", bold = true }) -- mauve
+
+vim.o.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- Windows
 vim.opt.splitbelow = true
