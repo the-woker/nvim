@@ -23,6 +23,7 @@
       pkgs: let
         pkgList = with pkgs; [
           # LSPs
+	  clang-tools
           lua-language-server
           vscode-langservers-extracted
           emmet-language-server
