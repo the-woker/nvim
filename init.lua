@@ -29,9 +29,9 @@ vim.opt.splitright = true
 vim.o.winborder = "rounded"
 
 -- Sane tab management
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 
 -- Undo management
