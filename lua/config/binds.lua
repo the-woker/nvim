@@ -8,7 +8,7 @@ function Keymap(mode, key, binding, opts)
 end
 
 Keymap("n", "<leader>w", "<cmd>w<CR>")
-Keymap("n", "<leader>q", ":q<CR>")
+Keymap("n", "<leader>q", "<cmd>q<CR>")
 Keymap("n", ";", ":")
 Keymap("n", "q:", ":") -- remove nonsense command
 Keymap("n", "<leader>bd", function() -- delete buffer

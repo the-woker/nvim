@@ -1,3 +1,5 @@
+vim.opt.confirm = true
+
 -- Autocommand to check git status
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
@@ -16,9 +18,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 				if count ~= "" and tonumber(count) > 0 then
 					vim.schedule(function()
 						vim.notify(
-							"󰊢 " .. count .. " new commit(s) available on remote.",
+							"   " .. count .. " new commit(s) available on remote.",
 							vim.log.levels.INFO,
-							{ title = "Git Status", icon = "󰊢" }
+							{ title = "Git Status", icon = "  " }
 						)
 					end)
 				end
@@ -47,37 +49,6 @@ vim.api.nvim_create_autocmd({ "WinLeave" }, {
 	group = cursorline_group,
 	callback = function()
 		vim.opt_local.cursorline = false
-	end,
-})
-
-local group = vim.api.nvim_create_augroup("autosave", {})
-
--- Notification to say when a file is saved by autosave
-vim.api.nvim_create_autocmd("User", {
-	pattern = "AutoSaveWritePre",
-	group = group,
-	callback = function(opts)
-		if opts.data.saved_buffer ~= nil then
-			local filename = vim.fn.expand("%:t")
-			print("Saved '" .. filename .. "' at " .. vim.fn.strftime("%H:%M:%S"))
-		end
-	end,
-})
-
--- Notification when enabling/disabling autosave for a buffer
-vim.api.nvim_create_autocmd("User", {
-	pattern = "AutoSaveEnable",
-	group = group,
-	callback = function()
-		print("AutoSave enabled")
-	end,
-})
-
-vim.api.nvim_create_autocmd("User", {
-	pattern = "AutoSaveDisable",
-	group = group,
-	callback = function()
-		print("AutoSave disabled")
 	end,
 })
 
