@@ -8,6 +8,7 @@ function Keymap(mode, key, binding, opts)
 end
 
 Keymap("n", "<leader>w", "<cmd>w<CR>")
+Keymap("n", "<A-q>", "<cmd>q<CR>")
 Keymap("n", "<leader>e", "<cmd>e .<CR>")
 Keymap("n", ";", ":")
 Keymap("n", "q:", ":") -- remove nonsense command
