@@ -59,7 +59,7 @@ vim.keymap.set("n", "<leader>u", require("undotree").open)
 vim.o.exrc = true
 
 -- Set clipboard
-vim.o.clipboard = "unnamedplus"
+-- vim.o.clipboard = "unnamedplus"
 
 -- Ignore case and some flash nvim stuff
 vim.o.ignorecase = true
