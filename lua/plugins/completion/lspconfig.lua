@@ -53,7 +53,6 @@ vim.lsp.enable({
 	"nixd",
 	"rust_analyzer",
 	"emmet_language_server",
-	"clangd",
 })
 
 vim.o.winborder = "rounded"
