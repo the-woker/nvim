@@ -34,6 +34,10 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 
+vim.schedule(function()
+	vim.o.clipboard = "unnamedplus"
+end)
+
 -- Undo management
 vim.opt.swapfile = false
 vim.opt.backup = false
