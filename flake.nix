@@ -23,7 +23,7 @@
       pkgs: let
         pkgList = with pkgs; [
           # LSPs
-	  clang-tools
+          clang-tools
           lua-language-server
           vscode-langservers-extracted
           emmet-language-server
@@ -66,7 +66,7 @@
           inherit pkgs;
           env = {
             "CONFIG_ROOT" = ./.;
-            "NVIM_APPNAME" = "nvim-voidarc-remote";
+            "NVIM_APPNAME" = "nvim";
           };
           runtimePkgs = with pkgs; [
             lua5_1
