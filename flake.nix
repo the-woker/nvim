@@ -57,7 +57,7 @@
           inherit pkgs;
           env = {
             "CONFIG_ROOT" = ./.;
-            "NVIM_APPNAME" = "nvim-voidarc-remote";
+            "NVIM_APPNAME" = "nvim";
           };
           runtimePkgs = pkgList;
           settings.config_directory = ./.;
