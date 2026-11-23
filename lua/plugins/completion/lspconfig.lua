@@ -1,3 +1,16 @@
+-- Build blink.cmp ONLY when installed or updated via vim.pack
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		local name, kind = ev.data.spec.name, ev.data.kind
+		if name == "blink" and (kind == "install" or kind == "update") then
+			if not ev.data.active then
+				vim.cmd.packadd("blink")
+			end
+			require("blink.cmp").build():pwait()
+		end
+	end,
+})
+
 vim.pack.add({
 	{ src = "https://github.com/neovim/nvim-lspconfig", name = "lspconfig" },
 	{ src = "https://github.com/saghen/blink.cmp", name = "blink" },
@@ -33,17 +46,16 @@ vim.lsp.config("nixd", {
 vim.lsp.config("lua_ls", {
 	settings = {
 		Lua = {
-			-- Tell the server to let Neovim handle snippet expansion
 			completion = {
 				callSnippet = "Replace",
 			},
-			-- Use LuaJIT (which Neovim uses)
 			runtime = {
 				version = "LuaJIT",
 			},
 		},
 	},
 })
+
 vim.lsp.enable({
 	"lua_ls",
 	"ts_ls",
@@ -56,10 +68,7 @@ vim.lsp.enable({
 })
 
 vim.o.winborder = "rounded"
-
 vim.api.nvim_set_hl(0, "BlinkCmpMenuBorder", { fg = "#89b4fa" })
-
-require("blink.cmp").build():pwait()
 
 require("blink.cmp").setup({
 	fuzzy = { implementation = "rust" },
@@ -96,30 +105,29 @@ require("blink.cmp").setup({
 
 	sources = {
 		default = {
-			"lsp", -- (Equivalent to cmp-nvim-lsp)
-			"snippets", -- (Handled by the snippets config, replaces cmp_luasnip source)
-			"buffer", -- (Equivalent to cmp-buffer)
-			"path", -- (Equivalent to cmp-path)
+			"lsp",
+			"snippets",
+			"buffer",
+			"path",
 		},
 	},
 })
 
-vim.api.nvim_create_autocmd("FileType", { -- Lazy load lazydev when in lua file (no pun intended)
+vim.api.nvim_create_autocmd("FileType", {
 	pattern = "lua",
+	once = true, -- Only load and configure lazydev once
 	callback = function()
 		vim.pack.add({
 			{ src = "https://github.com/folke/lazydev.nvim", name = "lazydev" },
 		})
 		require("lazydev").setup()
-		require("blink.cmp").setup({ -- Reload blink with lazydev as a source
+		require("blink.cmp").setup({
 			sources = {
-				-- add lazydev to your completion providers
 				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
 				providers = {
 					lazydev = {
 						name = "LazyDev",
 						module = "lazydev.integrations.blink",
-						-- make lazydev completions top priority (see `:h blink.cmp`)
 						score_offset = 100,
 					},
 				},
@@ -127,3 +135,4 @@ vim.api.nvim_create_autocmd("FileType", { -- Lazy load lazydev when in lua file 
 		})
 	end,
 })
+
