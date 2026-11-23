@@ -12,7 +12,6 @@ require("conform").setup({
 		markdown = { "prettier" },
 		html = { "prettier" },
 		svelte = { "prettier" },
-		python = { "black" },
 		nix = { "alejandra" },
 		css = { "prettier" },
 		rust = { "rustfmt" },

@@ -59,7 +59,6 @@ vim.lsp.config("lua_ls", {
 vim.lsp.enable({
 	"lua_ls",
 	"ts_ls",
-	"pylsp",
 	"cssls",
 	"svelte",
 	"nixd",
@@ -135,4 +134,3 @@ vim.api.nvim_create_autocmd("FileType", {
 		})
 	end,
 })
-

@@ -19,7 +19,6 @@ require("nvim-treesitter").install({
 	"regex",
 	"tsx",
 	"typescript",
-	"python",
 	"vim",
 	"yaml",
 })
