@@ -46,6 +46,7 @@
           ripgrep
           gcc
           cargo
+          rustc
           fzf
           gnumake
           imagemagick
