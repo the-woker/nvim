@@ -16,7 +16,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
 				end
 
 				vim.system({ "git", "rev-list", "--count", "HEAD..@{u}" }, { text = true }, function(count_res)
-					local count = tonumber((count_res.stdout or ""):gsub("%s+", ""))
+					if count_res.code ~= 0 then
+						return
+					end
+
+					local count = tonumber(vim.trim(count_res.stdout or ""))
 					if count and count > 0 then
 						vim.schedule(function()
 							vim.notify(
