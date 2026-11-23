@@ -20,16 +20,24 @@ for _, file in ipairs(files) do
 	module_path = module_path:gsub("/", ".")
 
 	-- 3. The Guard: Don't require the current file (plugins.init)
-	if not module_path:match("%.init$") and module_path ~= "plugins" then
+ 	if not module_path:match("%.init$") and module_path ~= "plugins" then
+		local t0 = vim.uv.hrtime()
 		local status_ok, module_content = pcall(require, module_path)
+		local ms = (vim.uv.hrtime() - t0) / 1e6
+
+		if ms > 50 then
+			vim.schedule(function()
+				vim.notify(string.format("%s took %.1f ms", module_path, ms), vim.log.levels.WARN)
+			end)
+		end
 
 		if status_ok then
 			table.insert(plugins, module_content)
 		else
-			-- Optional: notify if a file failed to load
 			vim.notify("Error loading " .. module_path .. ": " .. module_content, vim.log.levels.ERROR)
 		end
 	end
+
 end
 
 return plugins

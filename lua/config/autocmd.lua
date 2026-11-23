@@ -3,29 +3,32 @@ vim.opt.confirm = true
 -- Autocommand to check git status
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		-- Verify if the current directory is a git repo
-		local is_git = os.execute("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
-		if is_git ~= 0 then
-			return
-		end
+		vim.system({ "git", "rev-parse", "--is-inside-work-tree" }, { text = true }, function(res)
+			if res.code ~= 0 then
+				return
+			end
 
-		-- Perform an async fetch to avoid startup lag
-		vim.fn.jobstart("git fetch", {
-			on_exit = function()
-				-- Get the number of commits the remote is ahead of local HEAD
-				local count = vim.fn.system("git rev-list --count HEAD..@{u} 2>/dev/null"):gsub("%s+", "")
-
-				if count ~= "" and tonumber(count) > 0 then
-					vim.schedule(function()
-						vim.notify(
-							"   " .. count .. " new commit(s) available on remote.",
-							vim.log.levels.INFO,
-							{ title = "Git Status", icon = "  " }
-						)
-					end)
+			vim.system({ "git", "fetch" }, {
+				env = { GIT_TERMINAL_PROMPT = "0" },
+			}, function(fetch_res)
+				if fetch_res.code ~= 0 then
+					return
 				end
-			end,
-		})
+
+				vim.system({ "git", "rev-list", "--count", "HEAD..@{u}" }, { text = true }, function(count_res)
+					local count = tonumber((count_res.stdout or ""):gsub("%s+", ""))
+					if count and count > 0 then
+						vim.schedule(function()
+							vim.notify(
+								"   " .. count .. " new commit(s) available on remote.",
+								vim.log.levels.INFO,
+								{ title = "Git Status", icon = "  " }
+							)
+						end)
+					end
+				end)
+			end)
+		end)
 	end,
 })
 
