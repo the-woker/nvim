@@ -56,6 +56,8 @@ Keymap("n", "ss", function()
 		},
 	})
 end)
+
+Keymap("n", '<leader>"', 'ciw""<Esc>P')
 Keymap("n", "S", function()
 	require("flash").treesitter()
 end)
